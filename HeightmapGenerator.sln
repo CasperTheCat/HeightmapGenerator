@@ -3,7 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HeightmapGenerator", "HeightmapGenerator\HeightmapGenerator.vcxproj", "{00BFFEC2-2849-497D-B19E-BB346363B664}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HeightmapGeneratorCore", "HeightmapGenerator\HeightmapGenerator.vcxproj", "{00BFFEC2-2849-497D-B19E-BB346363B664}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HeightmapGeneratorMain", "HGEntry\HGEntry.vcxproj", "{FAAD10EC-CE04-4A03-979C-A7F7E3283063}"
+	ProjectSection(ProjectDependencies) = postProject
+		{00BFFEC2-2849-497D-B19E-BB346363B664} = {00BFFEC2-2849-497D-B19E-BB346363B664}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +26,14 @@ Global
 		{00BFFEC2-2849-497D-B19E-BB346363B664}.Release|x64.Build.0 = Release|x64
 		{00BFFEC2-2849-497D-B19E-BB346363B664}.Release|x86.ActiveCfg = Release|Win32
 		{00BFFEC2-2849-497D-B19E-BB346363B664}.Release|x86.Build.0 = Release|Win32
+		{FAAD10EC-CE04-4A03-979C-A7F7E3283063}.Debug|x64.ActiveCfg = Debug|x64
+		{FAAD10EC-CE04-4A03-979C-A7F7E3283063}.Debug|x64.Build.0 = Debug|x64
+		{FAAD10EC-CE04-4A03-979C-A7F7E3283063}.Debug|x86.ActiveCfg = Debug|Win32
+		{FAAD10EC-CE04-4A03-979C-A7F7E3283063}.Debug|x86.Build.0 = Debug|Win32
+		{FAAD10EC-CE04-4A03-979C-A7F7E3283063}.Release|x64.ActiveCfg = Release|x64
+		{FAAD10EC-CE04-4A03-979C-A7F7E3283063}.Release|x64.Build.0 = Release|x64
+		{FAAD10EC-CE04-4A03-979C-A7F7E3283063}.Release|x86.ActiveCfg = Release|Win32
+		{FAAD10EC-CE04-4A03-979C-A7F7E3283063}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
