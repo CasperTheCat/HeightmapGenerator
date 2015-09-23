@@ -28,6 +28,36 @@ namespace Heightmap
 	}
 
 	//////////////////////////////////////////////////
+	// Linear Interpolate
+	//
+	double Perlin::lerp(double v0, double v1, double t)
+	{
+		return (1 - t) * v0 + t * v1;
+	}
+
+	//////////////////////////////////////////////////
+	// Perlin Fade
+	//
+	double Perlin::fade(double in)
+	{
+		return in * in * in * (in * (in * 6 - 15) + 10);
+	}
+
+	//////////////////////////////////////////////////
+	// Perlin Gradient
+	//
+	double Perlin::gradient(uint8_t grad, double x, double y, double z)
+	{
+		uint8_t gLow = grad & 15;
+
+		double u = gLow < 8 ? x : y;
+		double v = gLow < 4 ? y : gLow == 12 || gLow == 14 ? x : z;
+
+		return ((gLow & 1) == 0 ? u : -u) + ((gLow & 2) == 0 ? v : -v);
+	}
+
+
+	//////////////////////////////////////////////////
 	// Generate Noise
 	//
 	double Perlin::generateNoise(double xCoord, double yCoord, double zCoord)
@@ -52,7 +82,22 @@ namespace Heightmap
 		auto pBa = this->vecParam[pB] + izCoord;
 		auto pBb = this->vecParam[pB + 1] + izCoord;
 
-		return 0;
+		double res = lerp(z,
+			lerp(y,
+				lerp(x,
+					gradient(this->vecParam[pAa], x, y, z),
+					gradient(this->vecParam[pBa], x - 1, y, z)),
+				lerp(x,
+					gradient(this->vecParam[pAb], x, y - 1, z),
+					gradient(this->vecParam[pBb], x - 1, y - 1, z))),
+			lerp(y,
+				lerp(x,
+					gradient(this->vecParam[pAa + 1], x, y, z - 1),
+					gradient(this->vecParam[pBa + 1], x - 1, y, z - 1)),
+				lerp(x,
+					gradient(this->vecParam[pAb + 1], x, y - 1, z - 1),
+					gradient(this->vecParam[pBb + 1], x - 1, y - 1, z - 1))));
+		return (res + 1.0) / 2.0;
 	}
 
 

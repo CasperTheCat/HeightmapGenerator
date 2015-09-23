@@ -49,7 +49,7 @@ namespace Heightmap
 		double fade(double in);
 
 		// Linear interpolate
-		double lerp(double val, double pX, double pY);
+		double lerp(double v0, double v1, double t);
 
 		// Gradient function
 		double gradient(uint8_t grad, double x, double y, double z);
@@ -64,7 +64,7 @@ namespace Heightmap
 		~Perlin();
 
 		// Generate Noise
-		double generateNoise(double xCoord, double yCoord, double zCoord);
+		double generateNoise(double xCoord, double yCoord, double zCoord) override;
 	};
 
 
