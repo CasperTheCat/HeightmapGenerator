@@ -8,7 +8,7 @@
 //
 int main(int argc, char** argv)
 {
-	auto tMat = new Heightmap::Matrix(20);
+	auto tMat = new Heightmap::Map(20);
 	tMat->generateHeightmap(10);
 	float *tMArray = tMat->getArray();
 

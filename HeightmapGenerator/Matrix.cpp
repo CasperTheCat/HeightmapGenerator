@@ -7,7 +7,7 @@ namespace Heightmap
 	//////////////////////////////////////////////////
 	// Initialise the Matrix
 	//
-	void Matrix::initialise(uint16_t MatrixSize)
+	void Map::initialise(uint16_t MatrixSize)
 	{
 		if (this->bIsInit) return;
 
@@ -22,7 +22,7 @@ namespace Heightmap
 	//////////////////////////////////////////////////
 	// Default Constructor
 	//
-	Matrix::Matrix()
+	Map::Map()
 	{
 		/// Blank Initialise
 		this->matrixPointer = nullptr;
@@ -31,7 +31,7 @@ namespace Heightmap
 
 	//////////////////////////////////////////////////
 	// Initialising Constructor
-	Matrix::Matrix(uint16_t MatrixSize)
+	Map::Map(uint16_t MatrixSize)
 	{
 		/// Construct a matrix
 		initialise(MatrixSize);
@@ -40,111 +40,42 @@ namespace Heightmap
 	//////////////////////////////////////////////////
 	// Deconstructor
 	//
-	Matrix::~Matrix()
+	Map::~Map()
 	{
 		/// Unallocate the memory
 		if (!this->bIsInit && this->matrixPointer == nullptr) return;
 
 		/// Delete the matrix
-		delete matrixPointer;
+		delete this->matrixPointer;
 	}
 
+	//////////////////////////////////////////////////
+	// Map - Generate with Control Points
+	//
+	void Map::mapCPGenerate(uint16_t controlPoints)
+	{
+		/// Make random height
+		std::default_random_engine gen_engine;
+		std::binomial_distribution<float> distribution(0, 255);
+		auto hRand = std::bind(distribution, gen_engine);
+	}
+	
 	//////////////////////////////////////////////////
 	// Generate the Heightmap
 	//
-	void Matrix::generateHeightmap(uint8_t tHold)
+	void Map::generateHeightmap(uint8_t tHold)
 	{
-		for (int i = 0; i < this->matrixSize; i++)
-		{
-			this->matrixPointer[i*this->matrixSize + i] = float(tHold);
-			this->matrixPointer[i*this->matrixSize] = float(tHold);
-			this->matrixPointer[i*this->matrixSize - i] = float(tHold);
-		}
-		/// Conways Game of Life over 5 iterations
-#pragma unroll (5)
-		for (int i = 0; i < 5; i++)
-		{
-			/// Game of Life
-			gameOfLife(tHold);
-		}
+		if (!this->bIsInit) return;
+		/// Control Point Generate
+		mapCPGenerate(3);
 	}
-
-	//////////////////////////////////////////////////
-	// Conways Game of Life: Check Neighbours
-	//
-	uint8_t Matrix::gameOfLifeNeighbours(uint32_t elem, uint32_t tElem)
-	{
-		auto n = 0;
-		/// North
-		if (this->matrixPointer[Generic::iMod(elem - this->matrixSize, tElem)] > 127.5f) n++;
-
-		/// South
-		if (this->matrixPointer[Generic::iMod(elem + this->matrixSize, tElem)] > 127.5f) n++;
-
-		/// East
-		if (this->matrixPointer[Generic::iMod(elem + 1, tElem)] > 127.5f) n++;
-
-		/// West
-		if (this->matrixPointer[Generic::iMod(elem - 1, tElem)] > 127.5f) n++;
-
-		/// North East
-		if (this->matrixPointer[Generic::iMod(elem - this->matrixSize + 1, tElem)] > 127.5f) n++;
-
-		/// South East
-		if (this->matrixPointer[Generic::iMod(elem + this->matrixSize + 1, tElem)] > 127.5f) n++;
-
-		/// South West
-		if (this->matrixPointer[Generic::iMod(elem + this->matrixSize - 1, tElem)] > 127.5f) n++;
-
-		/// North West
-		if (this->matrixPointer[Generic::iMod(elem - this->matrixSize - 1, tElem)] > 127.5f) n++;
-
-		return n;
-
-	}
-
-	//////////////////////////////////////////////////
-	// Conways Game of Life Generator
-	//
-	void Matrix::gameOfLife(uint8_t tHold)
-	{
-		/// Easier local reference
-		auto elements = this->matrixSize * this->matrixSize;
-
-		/// Second array
-		float *temp = new float[elements];
-
-		/// CILK intel
-#pragma omp parallel for
-		for (auto i = 0; i < elements; i++)
-		{
-			/// Check Neighbours
-			auto n = gameOfLifeNeighbours(i,elements);
-
-			if(n < 3)
-			{
-				temp[i] = --this->matrixPointer[i];
-			}
-			else if (n == 3)
-			{
-				temp[i] = this->matrixPointer[i];
-			}
-			else if (n > 3)
-			{
-				temp[i] = ++this->matrixPointer[i];
-			}
-		}
-		delete matrixPointer;
-		this->matrixPointer = temp;		
-	}
-
 
 	//////////////////////////////////////////////////
 	// Accessor Methods
 	//
-	float* Matrix::getArray() const
+	float* Map::getArray() const
 	{
-		return matrixPointer;
+		return this->bIsInit ? this->matrixPointer : nullptr;
 	}
 
 }

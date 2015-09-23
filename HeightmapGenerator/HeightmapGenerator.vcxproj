@@ -152,6 +152,8 @@
   <ItemGroup>
     <ClCompile Include="Generic.cpp" />
     <ClCompile Include="Matrix.cpp" />
+    <ClCompile Include="Noise.cpp" />
+    <ClCompile Include="Perlin.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h" />
