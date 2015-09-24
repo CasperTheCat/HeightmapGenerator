@@ -18,7 +18,7 @@ namespace Heightmap
 		this->bIsInit = true;
 		this->matrixSize = MatrixSize;
 	}
-	
+
 	//////////////////////////////////////////////////
 	// Default Constructor
 	//
@@ -55,19 +55,34 @@ namespace Heightmap
 	void Map::mapCPGenerate(uint16_t controlPoints)
 	{
 		/// Make random height
-		std::default_random_engine gen_engine;
+		/*std::default_random_engine gen_engine;
 		std::binomial_distribution<float> distribution(0, 255);
-		auto hRand = std::bind(distribution, gen_engine);
+		auto hRand = std::bind(distribution, gen_engine);*/
 	}
-	
+
 	//////////////////////////////////////////////////
 	// Generate the Heightmap
 	//
-	void Map::generateHeightmap(uint8_t tHold)
+	void Map::generateHeightmap(uint32_t seed)
 	{
 		if (!this->bIsInit) return;
-		/// Control Point Generate
-		mapCPGenerate(3);
+
+		/// Get elements
+		uint32_t elements = this->matrixSize * this->matrixSize;
+
+		/// Create Perlin noise
+		Noise *nGen = new Perlin(seed);
+
+		/// 
+		for (auto i = 0; i < elements; i++)
+		{
+			double yC = double(i / this->matrixSize) / this->matrixSize;
+			double xC = double(i % this->matrixSize) / this->matrixSize;
+
+			this->matrixPointer[i] = nGen->generateNoise(10 * xC, 10 * yC, 0.8);
+		}
+
+		delete nGen;
 	}
 
 	//////////////////////////////////////////////////
