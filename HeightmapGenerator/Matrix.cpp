@@ -67,19 +67,19 @@ namespace Heightmap
 	{
 		if (!this->bIsInit) return;
 
-		/// Get elements
-		uint32_t elements = this->matrixSize * this->matrixSize;
-
 		/// Create Perlin noise
 		Noise *nGen = new Perlin(seed);
 
 		/// Generate map from noise
-		for (auto i = 0; i < elements; i++)
+		for (int y = 0; y < this->matrixSize; y++)
 		{
-			double yC = double(i / this->matrixSize) / this->matrixSize;
-			double xC = double(i % this->matrixSize) / this->matrixSize;
+			for (int x = 0; x < this->matrixSize; x++)
+			{
+				auto cy = double(y) / double(this->matrixSize);
+				auto cx = double(x) / double(this->matrixSize);
 
-			this->matrixPointer[i] = nGen->generateNoise(10 * xC, 10 * yC, 0.8);
+				this->matrixPointer[y * matrixSize + x] = nGen->generateNoise(cx,cy, 0.8);
+			}
 		}
 
 		delete nGen;

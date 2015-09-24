@@ -12,7 +12,6 @@
 
 #include <cstdint>
 #include <random>
-#include <functional>
 
 
 
@@ -57,6 +56,9 @@ namespace Heightmap
 	protected:
 
 	public:
+		// Default
+		Perlin();
+
 		// Seed Based Constructor
 		Perlin(uint32_t seed);
 
