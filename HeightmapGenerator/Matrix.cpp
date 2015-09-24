@@ -73,7 +73,7 @@ namespace Heightmap
 		/// Create Perlin noise
 		Noise *nGen = new Perlin(seed);
 
-		/// 
+		/// Generate map from noise
 		for (auto i = 0; i < elements; i++)
 		{
 			double yC = double(i / this->matrixSize) / this->matrixSize;
