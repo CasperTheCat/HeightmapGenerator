@@ -11,6 +11,7 @@
 #endif
 
 #include <cstdint>
+#include <vector>
 #include <random>
 
 
@@ -44,6 +45,7 @@ namespace Heightmap
 	private:
 		// Vector Parameter
 		std::vector<int> vecParam;
+
 		// Fade noise
 		double fade(double in);
 
@@ -51,7 +53,7 @@ namespace Heightmap
 		double lerp(double v0, double v1, double t);
 
 		// Gradient function
-		double gradient(uint8_t grad, double x, double y, double z);
+		double gradient(int grad, double x, double y, double z);
 
 	protected:
 

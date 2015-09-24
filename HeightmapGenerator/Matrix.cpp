@@ -78,7 +78,7 @@ namespace Heightmap
 				auto cy = double(y) / double(this->matrixSize);
 				auto cx = double(x) / double(this->matrixSize);
 
-				this->matrixPointer[y * matrixSize + x] = nGen->generateNoise(cx,cy, 0.8);
+				this->matrixPointer[y * matrixSize + x] = nGen->generateNoise(10 * cx,10 * cy, 0.8);
 			}
 		}
 

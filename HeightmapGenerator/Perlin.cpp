@@ -70,9 +70,9 @@ namespace Heightmap
 	//////////////////////////////////////////////////
 	// Perlin Gradient
 	//
-	double Perlin::gradient(uint8_t grad, double x, double y, double z)
+	double Perlin::gradient(int grad, double x, double y, double z)
 	{
-		uint8_t gLow = grad & 15;
+		int gLow = grad & 15;
 
 		double u = gLow < 8 ? x : y;
 		double v = gLow < 4 ? y : gLow == 12 || gLow == 14 ? x : z;
@@ -106,21 +106,28 @@ namespace Heightmap
 		auto pBa = this->vecParam[pB] + izCoord;
 		auto pBb = this->vecParam[pB + 1] + izCoord;
 
-		double res = lerp(z,
-			lerp(y,
-				lerp(x,
+		double res = lerp(
+			lerp(
+				lerp(
 					gradient(this->vecParam[pAa], xCoord, yCoord, zCoord),
-					gradient(this->vecParam[pBa], xCoord - 1, yCoord, zCoord)),
-				lerp(x,
+					gradient(this->vecParam[pBa], xCoord - 1, yCoord, zCoord),
+					x),
+				lerp(
 					gradient(this->vecParam[pAb], xCoord, yCoord - 1, zCoord),
-					gradient(this->vecParam[pBb], xCoord - 1, yCoord - 1, zCoord))),
-			lerp(y,
-				lerp(x,
+					gradient(this->vecParam[pBb], xCoord - 1, yCoord - 1, zCoord),
+					x),
+				y),
+			lerp(
+				lerp(
 					gradient(this->vecParam[pAa + 1], xCoord, yCoord, zCoord - 1),
-					gradient(this->vecParam[pBa + 1], xCoord - 1, yCoord, zCoord - 1)),
-				lerp(x,
+					gradient(this->vecParam[pBa + 1], xCoord - 1, yCoord, zCoord - 1),
+					x),
+				lerp(
 					gradient(this->vecParam[pAb + 1], xCoord, yCoord - 1, zCoord - 1),
-					gradient(this->vecParam[pBb + 1], xCoord - 1, yCoord - 1, zCoord - 1))));
+					gradient(this->vecParam[pBb + 1], xCoord - 1, yCoord - 1, zCoord - 1),
+					x),
+				y),
+			z);
 		return (res + 1.0) / 2.0;
 	}
 

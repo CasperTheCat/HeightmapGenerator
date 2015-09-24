@@ -20,6 +20,10 @@ void fWrite(float *t_p, uint16_t sizeXY)
 	{
 		for (int y = 0; y < sizeXY; y++)
 		{
+			/*color.rgbRed = uint8_t(255 * t_p[i * sizeXY + y]);
+			color.rgbGreen = uint8_t(255 * t_p[i * sizeXY + y]);
+			color.rgbBlue = uint8_t(255 * t_p[i * sizeXY + y]);
+			FreeImage_SetPixelColor(iPtr, i, y, &color);*/
 			auto n = t_p[i * sizeXY + y];
 			if(n < 0.35)
 			{
@@ -68,11 +72,11 @@ void fWrite(float *t_p, uint16_t sizeXY)
 //
 int main(int argc, char** argv)
 {
-	auto tMat = new Heightmap::Map(4096);
+	auto tMat = new Heightmap::Map(1024);
 	tMat->generateHeightmap(5555);
 	float *tMArray = tMat->getArray();
 
-	fWrite(tMArray, 4096);
+	fWrite(tMArray, 1024);
 
 	delete tMat;
 	return 0;
