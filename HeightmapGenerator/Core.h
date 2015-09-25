@@ -110,7 +110,7 @@ namespace Heightmap
 		void initialise(uint16_t MatrixSize);
 
 		// Run Generation
-		void generateHeightmap(uint32_t seed);
+		void generateHeightmap(uint32_t seed, uint32_t noiseMul);
 		// Accesser Methods
 		float *getArray() const;
 	};

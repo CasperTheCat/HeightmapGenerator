@@ -63,7 +63,7 @@ namespace Heightmap
 	//////////////////////////////////////////////////
 	// Generate the Heightmap
 	//
-	void Map::generateHeightmap(uint32_t seed)
+	void Map::generateHeightmap(uint32_t seed, uint32_t noiseMul)
 	{
 		if (!this->bIsInit) return;
 
@@ -71,6 +71,7 @@ namespace Heightmap
 		Noise *nGen = new Perlin(seed);
 
 		/// Generate map from noise
+#pragma omp parallel for
 		for (int y = 0; y < this->matrixSize; y++)
 		{
 			for (int x = 0; x < this->matrixSize; x++)
@@ -78,7 +79,7 @@ namespace Heightmap
 				auto cy = double(y) / double(this->matrixSize);
 				auto cx = double(x) / double(this->matrixSize);
 
-				this->matrixPointer[y * matrixSize + x] = nGen->generateNoise(10 * cx,10 * cy, 0.8);
+				this->matrixPointer[y * matrixSize + x] = nGen->generateNoise(noiseMul * cx, noiseMul * cy, 0);
 			}
 		}
 
