@@ -70,14 +70,19 @@ namespace Heightmap
 		/// Create Perlin noise
 		Noise *nGen = new Perlin(seed);
 
+		double cy, cx;
+		int x;
+
 		/// Generate map from noise
-#pragma omp parallel for
+#pragma omp parallel for private(cx,cy,x)
 		for (int y = 0; y < this->matrixSize; y++)
 		{
-			for (int x = 0; x < this->matrixSize; x++)
+			cy = double(y) / double(this->matrixSize);
+
+			for (x = 0; x < this->matrixSize; x++)
 			{
-				auto cy = double(y) / double(this->matrixSize);
-				auto cx = double(x) / double(this->matrixSize);
+				/// This needs recalced every loop!
+				cx = double(x) / double(this->matrixSize);
 
 				this->matrixPointer[y * matrixSize + x] = nGen->generateNoise(noiseMul * cx, noiseMul * cy, 0);
 			}
