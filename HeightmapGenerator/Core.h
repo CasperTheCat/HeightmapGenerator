@@ -87,8 +87,8 @@ namespace Heightmap
 		// Bool for initialisation
 		bool bIsInit = false;
 
-		// Smooth Map
-		void mapSmooth();
+		// Contrast Noise Map
+		inline double nContrast(double n, double pivot, double contrastRatio);
 
 		// Control Point Generate
 		void mapCPGenerate(uint16_t controlPoints);
