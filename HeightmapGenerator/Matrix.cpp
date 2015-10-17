@@ -68,7 +68,9 @@ namespace Heightmap
 		if (!this->bIsInit) return;
 
 		/// Create Perlin noise
-		Noise *nGen = new Perlin(seed);
+		Noise *nGen = new Perlin(seed); // Base Gen
+		Noise *rGen = new Perlin(seed + seed); // RoughnessGen
+		Noise *fGen = new Perlin(seed + seed + seed); // Fine Gen
 
 		double cy, cx;
 		int x;
@@ -84,11 +86,17 @@ namespace Heightmap
 				/// This needs recalced every loop!
 				cx = double(x) / double(this->matrixSize);
 
-				this->matrixPointer[y * matrixSize + x] = nGen->generateNoise(noiseMul * cx, noiseMul * cy, 0);
+
+				/// nContrast Works with Base N, Terrain Reduction Percentile, Effect Multiplier
+				this->matrixPointer[y * matrixSize + x] = 0.5 + nContrast(nGen->generateNoise(noiseMul * cx, noiseMul * cy, 0), 0.5, 1.0)
+					+ nContrast(rGen->generateNoise(noiseMul * 4 * cx, noiseMul * 4 * cy, 0), 0.25, 0.25);
+					+ nContrast(fGen->generateNoise(noiseMul * 16 * cx, noiseMul * 16 * cy, 0), 0.75, 0.125);
 			}
 		}
 
 		delete nGen;
+		delete rGen;
+		delete fGen;
 	}
 
 	//////////////////////////////////////////////////
@@ -98,5 +106,14 @@ namespace Heightmap
 	{
 		return this->bIsInit ? this->matrixPointer : nullptr;
 	}
+
+	//////////////////////////////////////////////////
+	// nContrast for Noise Gen
+	//
+	inline double Map::nContrast(double n, double pivot, double contrastRatio)
+	{
+		return (n - pivot) * contrastRatio;
+	}
+
 
 }

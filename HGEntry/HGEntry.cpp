@@ -11,6 +11,14 @@
 
 
 //////////////////////////////////////////////////
+// Clamp
+//
+inline float clamp(float val)
+{
+	return (val < 0.f) ? 0.f : ((val > 1.f) ? 1.0f : val);
+}
+
+//////////////////////////////////////////////////
 // BMP Write
 //
 void fWrite(float *t_p, uint16_t sizeXY)
@@ -25,11 +33,11 @@ void fWrite(float *t_p, uint16_t sizeXY)
 	{
 		for (int y = 0; y < sizeXY; y++)
 		{
-			/*color.rgbRed = uint8_t(255 * t_p[i * sizeXY + y]);
-			color.rgbGreen = uint8_t(255 * t_p[i * sizeXY + y]);
-			color.rgbBlue = uint8_t(255 * t_p[i * sizeXY + y]);
-			FreeImage_SetPixelColor(iPtr, i, y, &color);*/
-			auto n = t_p[i * sizeXY + y];
+			color.rgbRed = uint8_t(255 * clamp(t_p[i * sizeXY + y]));
+			color.rgbGreen = uint8_t(255 * clamp(t_p[i * sizeXY + y]));
+			color.rgbBlue = uint8_t(255 * clamp(t_p[i * sizeXY + y]));
+
+			/*auto n = t_p[i * sizeXY + y];
 			if (n < 0.2)
 			{
 				color.rgbRed = 0;
@@ -48,13 +56,43 @@ void fWrite(float *t_p, uint16_t sizeXY)
 				color.rgbGreen = 127;
 				color.rgbBlue = 0;
 			}
-			else if (n >= 0.35 && n < 0.6)
+			else if (n >= 0.35 && n < 0.45)
 			{
 				color.rgbRed = 30;
-				color.rgbGreen = 100;
+				color.rgbGreen = 130;
 				color.rgbBlue = 30;
 			}
-			else if (n >= 0.6 && n < 0.825)
+			else if (n >= 0.45 && n < 0.55)
+			{
+				color.rgbRed = 50;
+				color.rgbGreen = 120;
+				color.rgbBlue = 50;
+			}
+			else if (n >= 0.55 && n < 0.6)
+			{
+				color.rgbRed = 60;
+				color.rgbGreen = 110;
+				color.rgbBlue = 60;
+			}
+			else if (n >= 0.6 && n < 0.65)
+			{
+				color.rgbRed = 110;
+				color.rgbGreen = 110;
+				color.rgbBlue = 110;
+			}
+			else if (n >= 0.65 && n < 0.7)
+			{
+				color.rgbRed = 120;
+				color.rgbGreen = 120;
+				color.rgbBlue = 120;
+			}
+			else if (n >= 0.7 && n < 0.75)
+			{
+				color.rgbRed = 150;
+				color.rgbGreen = 150;
+				color.rgbBlue = 150;
+			}
+			else if (n >= 0.75 && n < 0.825)
 			{
 				color.rgbRed = 150;
 				color.rgbGreen = 150;
@@ -65,7 +103,7 @@ void fWrite(float *t_p, uint16_t sizeXY)
 				color.rgbRed = 255;
 				color.rgbGreen = 255;
 				color.rgbBlue = 255;
-			}
+			}*/
 			FreeImage_SetPixelColor(iPtr, i, y, &color);
 
 			/// Limit only 8 greys
