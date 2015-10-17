@@ -25,11 +25,11 @@ void fWrite(float *t_p, uint16_t sizeXY)
 	{
 		for (int y = 0; y < sizeXY; y++)
 		{
-			/*color.rgbRed = uint8_t(255 * t_p[i * sizeXY + y]);
+			color.rgbRed = uint8_t(255 * t_p[i * sizeXY + y]);
 			color.rgbGreen = uint8_t(255 * t_p[i * sizeXY + y]);
-			color.rgbBlue = uint8_t(255 * t_p[i * sizeXY + y]);*/
+			color.rgbBlue = uint8_t(255 * t_p[i * sizeXY + y]);
 
-			auto n = t_p[i * sizeXY + y];
+			/*auto n = t_p[i * sizeXY + y];
 			if (n < 0.2)
 			{
 				color.rgbRed = 0;
@@ -95,7 +95,7 @@ void fWrite(float *t_p, uint16_t sizeXY)
 				color.rgbRed = 255;
 				color.rgbGreen = 255;
 				color.rgbBlue = 255;
-			}
+			}*/
 			FreeImage_SetPixelColor(iPtr, i, y, &color);
 
 			/// Limit only 8 greys
