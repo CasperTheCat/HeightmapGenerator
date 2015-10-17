@@ -89,7 +89,7 @@ namespace Heightmap
 
 				/// nContrast Works with Base N, Terrain Reduction Percentile, Effect Multiplier
 				this->matrixPointer[y * matrixSize + x] = 0.5
-					+ nContrast(nGen->generateNoise(noiseMul * cx, noiseMul * cy, 0), 0.75, 1.5)
+					+ nContrast(nGen->generateNoise(noiseMul * cx, noiseMul * cy, 0), 0.50, 1.5)
 					+ nContrast(rGen->generateNoise(noiseMul * 2 * cx, noiseMul * 2 * cy, 0), 0.25, 0.25)
 					+ nContrast(fGen->generateNoise(noiseMul * 8 * cx, noiseMul * 8 * cy, 0), 0.75, 0.125);
 			}
