@@ -14,7 +14,7 @@
 #include <vector>
 #include <random>
 
-#pragma warning (disable: 1744) /// Bloody warning - Vector doesn't have __declspec(dllexport)
+//#pragma warning (disable: 1744) /// Bloody warning - Vector doesn't have __declspec(dllexport)
 
 namespace Heightmap
 {
