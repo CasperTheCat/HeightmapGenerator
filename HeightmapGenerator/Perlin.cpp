@@ -41,10 +41,32 @@ namespace Heightmap
 		iota(this->vecParam.begin(), this->vecParam.end(), 0);
 
 		/// Create Random generator
-		std::default_random_engine rGen(seed);
+		//std::default_random_engine rGen(seed);
+		std::mt19937_64 rGen(seed);
 
 		/// Shuffle vector using rGen engine
 		shuffle(this->vecParam.begin(), this->vecParam.end(), rGen);
+
+		/// Dup Vector
+		this->vecParam.insert(this->vecParam.end(),this->vecParam.begin(), this->vecParam.end());
+	}
+
+	Perlin::Perlin(std::mt19937_64 &rng)
+	{
+		/// Resize the vector
+		this->vecParam.resize(256);
+
+		/// Initial with values from 0 to 255
+		iota(this->vecParam.begin(), this->vecParam.end(), 0);
+
+		/// Create Random generator
+		//std::default_random_engine rGen(seed);
+		//std::mt19937_64 rGen(seed);
+
+		printf("%llu\n", rng());
+
+		/// Shuffle vector using rGen engine
+		shuffle(this->vecParam.begin(), this->vecParam.end(), rng);
 
 		/// Dup Vector
 		this->vecParam.insert(this->vecParam.end(),this->vecParam.begin(), this->vecParam.end());

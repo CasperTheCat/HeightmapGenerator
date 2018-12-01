@@ -4,10 +4,14 @@
 
 // DLL Import Export
 
-#ifdef HGCOREEXPORT
-#define HGCOREAPI __declspec(dllexport)
+#ifdef _WIN32
+	#ifdef HGCOREEXPORT
+		#define HGCOREAPI __declspec(dllexport)
+	#else
+		#define HGCOREAPI __declspec(dllimport)
+	#endif
 #else
-#define HGCOREAPI __declspec(dllimport)
+	#define HGCOREAPI
 #endif
 
 #include <cstdint>
@@ -63,6 +67,8 @@ namespace Heightmap
 
 		// Seed Based Constructor
 		Perlin(uint32_t seed);
+
+		Perlin(std::mt19937_64 &rng);
 
 		// Default Deconstructor
 		~Perlin();
